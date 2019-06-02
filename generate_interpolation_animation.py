@@ -29,7 +29,7 @@ def main():
     #model_path = "./models/karras2019stylegan-celebahq-1024x1024.pkl"
     #!wget https://github.com/parameter-pollution/stylegan_paintings/releases/download/v0.1/network-snapshot-008040.pkl
     #model_path = "./results/00001-sgan-pics-1gpu/network-snapshot-008040.pkl"
-    model_path = "./results/00003-sgan-pics-1gpu/network-snapshot-008070.pkl"
+    model_path = "./results/00001-sgan-pics-1gpu/network-snapshot-008080.pkl"
     with open(model_path,"rb") as f:
         _G, _D, Gs = pickle.load(f)
         # _G = Instantaneous snapshot of the generator. Mainly useful for resuming a previous training run.

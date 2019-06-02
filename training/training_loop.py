@@ -238,7 +238,7 @@ def training_loop(
                 cur_nimg += sched.minibatch
             tflib.run([G_train_op], {lod_in: sched.lod, lrate_in: sched.G_lrate, minibatch_in: sched.minibatch})
 
-        print('training done', cur_nimg, tick_start_nimg, sched.tick_kimg)
+        #print('training done', cur_nimg, tick_start_nimg, sched.tick_kimg)
         # Perform maintenance tasks once per tick.
         done = (cur_nimg >= total_kimg * 1000)
         if cur_nimg >= tick_start_nimg + sched.tick_kimg * 1000 or done:
