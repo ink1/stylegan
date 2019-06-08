@@ -42,27 +42,19 @@ def main():
     fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
 
     #rnd = np.random.RandomState(1337)
-    rnd = np.random.RandomState(42)
+    rnd = np.random.RandomState(314)
+    number_of_frames = 500
+    number_of_segments = 10
+    frames_per_segment = number_of_frames//number_of_segments
+    frame_step = 1.0/frames_per_segment
 
-    latent_vector1 = rnd.randn(1, Gs.input_shape[1])
-    latent_vector2 = rnd.randn(1, Gs.input_shape[1])
-
-    number_of_frames = 240
-
-    frame_step = 2*1.0/number_of_frames
-    x = 0
+    print('Gs shape: ', Gs.input_shape)
+    latent_input = rnd.randn(1, Gs.input_shape[1])
+    frame_count = 0
+    x = frame_step
     for frame_count in range(1,number_of_frames):
-        x = x + frame_step
-        latent_input = latent_vector1.copy()
-        for i in range(512):
-            f1 = latent_vector1[0][i]
-            f2 = latent_vector2[0][i]
-            if f1 > f2:
-                tmp = f2
-                f2 = f1
-                f1 = tmp
-            fnew = f1 + (f2-f1)*x
-            latent_input[0][i] = fnew
+        latent_vector = rnd.randn(1, Gs.input_shape[1])
+        latent_input = latent_input + x*(latent_vector - latent_input)
         images = Gs.run(latent_input, None, truncation_psi=1, randomize_noise=False, output_transform=fmt)
 
         # Save image.
