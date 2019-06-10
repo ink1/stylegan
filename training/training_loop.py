@@ -137,7 +137,7 @@ def training_loop(
     resume_run_id           = None,     # Run ID or network pkl to resume training from, None = start from scratch.
     #resume_run_id           = 'latest', # Run ID or network pkl to resume training from, None = start from scratch.
     resume_snapshot         = None,     # Snapshot index to resume training from, None = autodetect.
-    resume_kimg             = 10000.,   # Assumed training progress at the beginning. Affects reporting and training schedule.
+    resume_kimg             = 0.0,      # Assumed training progress at the beginning. Affects reporting and training schedule.
     resume_time             = 0.0):     # Assumed wallclock time at the beginning. Affects reporting.
 
     # Initialize dnnlib and TensorFlow.
