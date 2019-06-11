@@ -52,7 +52,7 @@ if 1:
 
     # Default options.
     train.total_kimg = 25000
-    #train.resume_run_id = 'latest'
+    train.resume_run_id = 'latest'
     train.resume_run_id = None
     sched.lod_initial_resolution = 8
     sched.G_lrate_dict = {128: 0.0015, 256: 0.002, 512: 0.003, 1024: 0.003}
