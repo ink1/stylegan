@@ -69,6 +69,7 @@ def training_schedule(
     lrate_rampup_kimg       = 0,        # Duration of learning rate ramp-up.
     tick_kimg_base          = 160,      # Default interval of progress snapshots.
     #tick_kimg_dict          = {4: 160, 8:140, 16:120, 32:100, 64:80, 128:60, 256:40, 512:30, 1024:20}): # Resolution-specific overrides.
+    # make reporting more frequent
     tick_kimg_dict          = {4: 160, 8:140, 16:120, 32:100, 64:80, 128:60, 256:40, 512:10, 1024:10}): # Resolution-specific overrides.
 
     # Initialize result dict.
@@ -137,7 +138,7 @@ def training_loop(
     #resume_run_id           = None,     # Run ID or network pkl to resume training from, None = start from scratch.
     resume_run_id           = 'latest', # Run ID or network pkl to resume training from, None = start from scratch.
     resume_snapshot         = None,     # Snapshot index to resume training from, None = autodetect.
-    resume_kimg             = 10000.,   # Assumed training progress at the beginning. Affects reporting and training schedule.
+    resume_kimg             = 0.0,   # Assumed training progress at the beginning. Affects reporting and training schedule.
     resume_time             = 0.0):     # Assumed wallclock time at the beginning. Affects reporting.
 
     # Initialize dnnlib and TensorFlow.
@@ -153,12 +154,14 @@ def training_loop(
             #network_pkl = misc.locate_network_pkl(resume_run_id, resume_snapshot)
             if resume_run_id == 'latest':
                 network_pkl, resume_kimg = misc.locate_latest_pkl()
-                print('loaded resume_kimg=', resume_kimg)
+                print('resume_kimg (loaded) =', resume_kimg)
             else:
                 network_pkl = misc.locate_network_pkl(resume_run_id, resume_snapshot)
+                print('resume_kimg (passed) =', resume_kimg)
             print('Loading networks from "%s"...' % network_pkl)
             G, D, Gs = misc.load_pkl(network_pkl)
         else:
+            print('resume_kimg (passed) =', resume_kimg)
             print('Constructing networks...')
             G = tflib.Network('G', num_channels=training_set.shape[0], resolution=training_set.shape[1], label_size=training_set.label_size, **G_args)
             D = tflib.Network('D', num_channels=training_set.shape[0], resolution=training_set.shape[1], label_size=training_set.label_size, **D_args)
